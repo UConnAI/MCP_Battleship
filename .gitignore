@@ -4,3 +4,8 @@
 .openai/
 node_modules/
 *.log
+data/
+data-demo/
+.env
+.env.*
+!.env.example

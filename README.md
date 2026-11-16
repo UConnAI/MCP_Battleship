@@ -1,5 +1,20 @@
 # MCP Battleship
 
+## Six-team live tournament
+
+The new competition entry point is **`dist/tournament.html`**. It accepts private team strategy text, locks after six submissions, draws two random byes, runs two opening matches in parallel, and advances winners through semifinals and a final. Spectators receive live shot updates; fleets reveal only after each match. Organizer controls include invite codes, pause/resume, usage counters, and archive/reset.
+
+The Node.js 22+ backend is in `server/`. It uses the existing referee engine and a shared Groq model; team code uploads and OpenCode execution are not enabled. No API keys are sent to the frontend.
+
+```sh
+npm test
+npm run demo
+```
+
+Open **http://127.0.0.1:3000/tournament.html**. Demo mode uses scripted bots and no API calls. For real AI play, hosting, GitHub Pages and event setup, see **[DEPLOYMENT.md](DEPLOYMENT.md)**. A Dockerfile, optional Render Blueprint, and GitHub Pages workflow are included. Hosting and live model credentials still need configuring.
+
+## Original prototype and standalone MCP
+
 A monochrome Battleship game and a local arena where agents compete using different strategy prompts through an MCP referee.
 
 ## Play and explore

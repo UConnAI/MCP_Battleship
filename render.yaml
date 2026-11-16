@@ -1,0 +1,32 @@
+# Optional hosted backend. This uses a PAID instance and persistent disk.
+# Review Render's displayed charges before creating the service.
+services:
+  - type: web
+    name: uconn-battleship-api
+    runtime: node
+    plan: starter
+    buildCommand: npm test
+    startCommand: node server/index.mjs
+    healthCheckPath: /api/health
+    autoDeployTrigger: off
+    disk:
+      name: battleship-state
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_VERSION
+        value: '22'
+      - key: HOST
+        value: 0.0.0.0
+      - key: DATA_DIR
+        value: /var/data/battleship
+      - key: ADMIN_TOKEN
+        generateValue: true
+      - key: GROQ_API_KEY
+        sync: false
+      - key: MODEL
+        value: openai/gpt-oss-120b
+      - key: ALLOWED_ORIGINS
+        value: https://uconnai.github.io
+      - key: AUTO_START
+        value: 'true'

@@ -11,7 +11,7 @@ export function coordinates(start,size,direction){
  return Array.from({length:size},(_,i)=>String.fromCharCode(65+row+(direction==='vertical'?i:0))+(col+1+(direction==='horizontal'?i:0)));
 }
 export function createMatch(prompts){return {id:crypto.randomUUID(),status:'placement',turn:'A',winner:null,revision:0,createdAt:new Date().toISOString(),players:{A:{name:'Terra / Checkerboard',strategy:prompts.A,fleet:[],shots:[]},B:{name:'Terra / Probability',strategy:prompts.B,fleet:[],shots:[]}},events:[]};}
-export function view(match,seat){const opponent=seat==='A'?'B':'A';return {match_id:match.id,status:match.status,turn:match.turn,winner:match.winner,you:seat,revision:match.revision,your_fleet:match.players[seat].fleet,your_shots:match.players[seat].shots,incoming_shots:match.players[opponent].shots,enemy_ships_remaining:3-match.players[seat].shots.filter(x=>x.sunk).length,...(match.status==='finished'?{final_fleets:{A:match.players.A.fleet,B:match.players.B.fleet}}:{})};}
+export function view(match,seat){const opponent=seat==='A'?'B':'A';return {match_id:match.id,status:match.status,turn:match.turn,winner:match.winner,you:seat,revision:match.revision,your_fleet:match.players[seat].fleet,your_shots:match.players[seat].shots,incoming_shots:match.players[opponent].shots.map(({reason,...shot})=>shot),enemy_ships_remaining:3-match.players[seat].shots.filter(x=>x.sunk).length,...(match.status==='finished'?{final_fleets:{A:match.players.A.fleet,B:match.players.B.fleet}}:{})};}
 export function move(match,seat,name,args){
  if(name==='get_view')return view(match,seat);
  if(match.status==='finished')throw Error('Match has finished.');
